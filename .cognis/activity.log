@@ -3,3 +3,4 @@
 2024-07-17T19:03:33  test(output): add a fast path for the common case
 2024-08-09T14:20:40  test(tests): improve error messages with context
 2024-08-14T09:37:47  feat(cache): add a dry-run flag
+2024-09-07T16:54:54  fix(fixtures): trim whitespace in parsed fields
