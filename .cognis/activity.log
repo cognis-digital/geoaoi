@@ -4,3 +4,4 @@
 2024-08-09T14:20:40  test(tests): improve error messages with context
 2024-08-14T09:37:47  feat(cache): add a dry-run flag
 2024-09-07T16:54:54  fix(fixtures): trim whitespace in parsed fields
+2024-09-29T11:11:01  docs: standing on the shoulders of giants (garak, sigma, trufflehog)
