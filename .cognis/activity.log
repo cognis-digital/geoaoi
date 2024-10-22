@@ -5,3 +5,4 @@
 2024-08-14T09:37:47  feat(cache): add a dry-run flag
 2024-09-07T16:54:54  fix(fixtures): trim whitespace in parsed fields
 2024-09-29T11:11:01  docs: standing on the shoulders of giants (garak, sigma, trufflehog)
+2024-10-22T18:28:08  perf(tests): add a --quiet mode
