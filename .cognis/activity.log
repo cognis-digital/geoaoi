@@ -8,3 +8,4 @@
 2024-10-22T18:28:08  perf(tests): add a --quiet mode
 2024-10-28T13:45:15  build(cache): lower memory on big inputs
 2024-11-19T08:02:22  docs(output): cover the multiline case
+2024-12-13T15:19:29  docs(tests): add usage examples to help
