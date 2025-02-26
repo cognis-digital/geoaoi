@@ -12,3 +12,4 @@
 2025-01-05T10:36:36  style(cache): reduce false positives on edge cases
 2025-01-09T17:53:43  ci(fixtures): support stdin as a source
 2025-02-02T12:10:50  chore: NULLBYTE nightly sweep
+2025-02-25T19:27:57  chore(tests): add type hints to the public API
