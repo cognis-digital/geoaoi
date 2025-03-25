@@ -14,3 +14,4 @@
 2025-02-02T12:10:50  chore: NULLBYTE nightly sweep
 2025-02-25T19:27:57  chore(tests): add type hints to the public API
 2025-03-20T14:44:04  test(cache): add color + severity icons
+2025-03-25T09:01:11  feat(output): bump the dev toolchain
