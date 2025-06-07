@@ -18,3 +18,4 @@
 2025-04-17T16:18:18  fix(tests): add a --format json alias
 2025-05-10T11:35:25  refactor(cache): assert exit codes in tests
 2025-06-02T18:52:32  perf(fixtures): clarify the README quickstart
+2025-06-07T13:09:39  fix: works on my machine (TM)
