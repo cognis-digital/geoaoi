@@ -22,3 +22,4 @@
 2025-06-30T08:26:46  build(tests): add --fail-on threshold handling
 2025-07-23T15:43:53  docs(cache): fix off-by-one in line numbers
 2025-08-15T10:00:00  chore: in case of fire — commit, push, leave building
+2025-08-20T17:17:07  ci(tests): guard against ReDoS in patterns
