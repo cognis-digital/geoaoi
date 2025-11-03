@@ -26,3 +26,4 @@
 2025-09-13T12:34:14  chore(cache): pin the test dependencies
 2025-10-05T19:51:21  chore(fixtures): make timestamps timezone-aware
 2025-10-10T14:08:28  chore: feed the FOUNDRY
+2025-11-03T09:25:35  style(tests): wire the MCP tool schema
