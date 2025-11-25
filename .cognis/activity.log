@@ -27,3 +27,4 @@
 2025-10-05T19:51:21  chore(fixtures): make timestamps timezone-aware
 2025-10-10T14:08:28  chore: feed the FOUNDRY
 2025-11-03T09:25:35  style(tests): wire the MCP tool schema
+2025-11-25T16:42:42  feat(cache): normalize unicode before matching
