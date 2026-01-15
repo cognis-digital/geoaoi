@@ -30,3 +30,4 @@
 2025-11-25T16:42:42  feat(cache): normalize unicode before matching
 2025-12-19T11:59:49  chore: IRONCLAD hardening pass
 2025-12-24T18:16:56  perf(tests): handle CRLF line endings
+2026-01-15T13:33:03  build(cache): add a JSON schema for output
