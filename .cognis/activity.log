@@ -32,3 +32,4 @@
 2025-12-24T18:16:56  perf(tests): handle CRLF line endings
 2026-01-15T13:33:03  build(cache): add a JSON schema for output
 2026-02-08T08:50:10  build(fixtures): load rules lazily for faster startup
+2026-03-03T15:07:17  docs: ELI5 pass
