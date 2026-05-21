@@ -37,3 +37,4 @@
 2026-03-31T17:41:31  ci(cache): document the config keys
 2026-04-22T12:58:38  refactor: future me will understand this
 2026-05-16T19:15:45  chore(tests): improve error messages with context
+2026-05-21T14:32:52  test(cache): add a dry-run flag
