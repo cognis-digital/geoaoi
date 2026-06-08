@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: geoaoi, labels: { app: geoaoi } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: geoaoi } }
+  template:
+    metadata: { labels: { app: geoaoi } }
+    spec:
+      containers:
+        - name: geoaoi
+          image: ghcr.io/cognis-digital/geoaoi:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: geoaoi }
+spec:
+  selector: { app: geoaoi }
+  ports: [{ port: 80, targetPort: 8000 }]
