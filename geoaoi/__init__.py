@@ -1,2 +1,11 @@
-"""GEOAOI — Area-of-interest geospatial helper: bounding boxes, geofence checks, and change-event diffs from coordinate logs."""
-__version__ = "0.1.0"
+"""geoaoi — part of the Cognis Neural Suite."""
+try:  # re-export the tool's public API + identity from core
+    from geoaoi.core import *  # noqa: F401,F403
+except Exception:  # pragma: no cover
+    pass
+try:
+    from geoaoi.core import TOOL_NAME, TOOL_VERSION
+except Exception:  # pragma: no cover
+    TOOL_NAME = "geoaoi"
+    TOOL_VERSION = "0.1.0"
+__version__ = TOOL_VERSION
