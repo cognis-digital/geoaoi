@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/geoaoi",
+  "version": "0.2.0",
+  "description": "JavaScript port of geoaoi (Cognis Neural Suite)",
+  "bin": {
+    "geoaoi": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
