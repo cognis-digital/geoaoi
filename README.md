@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-geoaoi
+pip install "git+https://github.com/cognis-digital/geoaoi.git"
 geoaoi scan .            # → prioritized findings in seconds
 ```
 
@@ -52,7 +52,7 @@ Area-of-interest geospatial helper: bounding boxes, geofence checks, and change-
 ## Quick start
 
 ```bash
-pip install cognis-geoaoi
+pip install "git+https://github.com/cognis-digital/geoaoi.git"
 geoaoi --version
 geoaoi scan .                       # scan current project
 geoaoi scan . --format json         # machine-readable
