@@ -20,6 +20,36 @@ pip install cognis-geoaoi
 geoaoi scan .            # → prioritized findings in seconds
 ```
 
+
+## Usage — step by step
+
+1. Install (Python 3.9+):
+   ```bash
+   pip install geoaoi
+   ```
+2. Compute the bounding box of a coordinate log (CSV, or `-` for stdin):
+   ```bash
+   geoaoi bbox track.csv
+   ```
+3. Check point membership against a geofence — either a polygon or a
+   center+radius circle — and fail when points fall outside a required AOI:
+   ```bash
+   geoaoi geofence track.csv --center 38.89,-77.03 --radius 500 --require-inside
+   geoaoi geofence track.csv --polygon "38.9,-77.1;38.9,-77.0;38.8,-77.0"
+   ```
+4. Diff two snapshots for enter/exit/move events past a movement threshold:
+   ```bash
+   geoaoi diff before.csv after.csv --threshold 50 --fail-on-change
+   ```
+5. Read the output: tables print per-point/per-event rows; add `--format json`
+   (a top-level flag) for machine-readable output. `geofence --require-inside`
+   and `diff --fail-on-change` exit `1` when a breach/change is detected — use
+   that in CI or alerting:
+   ```bash
+   geoaoi --format json geofence track.csv --center 38.89,-77.03 --radius 500 \
+       --require-inside > fence.json
+   ```
+
 ## Contents
 
 - [Why geoaoi?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
