@@ -34,3 +34,6 @@ geoaoi = "geoaoi.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["geoaoi"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
