@@ -96,6 +96,40 @@ class TestEngine(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_polygon("0,0;1,1")
 
+    def test_polygon_extra_comma_raises(self):
+        # "lat,lon,extra" should raise a clear ValueError, not a bare unpack error.
+        with self.assertRaises(ValueError) as ctx:
+            parse_polygon("0,0,extra;1,1;2,2")
+        self.assertIn("vertex 1", str(ctx.exception))
+
+    def test_polygon_non_numeric_raises(self):
+        with self.assertRaises(ValueError) as ctx:
+            parse_polygon("abc,def;1,1;2,2")
+        self.assertIn("non-numeric", str(ctx.exception))
+
+    def test_polygon_out_of_range_lat_raises(self):
+        with self.assertRaises(ValueError) as ctx:
+            parse_polygon("200,0;1,1;2,2")
+        self.assertIn("latitude", str(ctx.exception))
+
+    def test_polygon_empty_spec_raises(self):
+        with self.assertRaises(ValueError):
+            parse_polygon("")
+
+    def test_diff_negative_threshold_raises(self):
+        from geoaoi.core import Point
+        with self.assertRaises(ValueError) as ctx:
+            diff_events([Point("A", 0.0, 0.0)], [Point("A", 0.0, 0.0)], move_threshold_m=-1.0)
+        self.assertIn("move_threshold_m", str(ctx.exception))
+
+    def test_diff_zero_threshold_valid(self):
+        # threshold=0 is valid; any displacement >= 0 m counts as a move (haversine=0 still >= 0).
+        # The important thing is that it does NOT raise — it produces a result.
+        from geoaoi.core import Point
+        events = diff_events([Point("A", 0.0, 0.0)], [Point("A", 0.0, 0.0)], move_threshold_m=0.0)
+        self.assertEqual(len(events), 1)
+        self.assertIn(events[0]["event"], ("static", "move"))
+
 
 class TestCLI(unittest.TestCase):
     def _run(self, argv):
@@ -145,6 +179,42 @@ class TestCLI(unittest.TestCase):
     def test_missing_file_exit_2(self):
         code, _ = self._run(["bbox", "does-not-exist.csv"])
         self.assertEqual(code, 2)
+
+    def test_geofence_negative_radius_exit_2(self):
+        with tempfile.TemporaryDirectory() as d:
+            tmp = pathlib.Path(d)
+            f = self._write(tmp, "t0.csv", T0)
+            code, _ = self._run(["geofence", f, "--center", "38.89,-77.02", "--radius", "-5"])
+            self.assertEqual(code, 2)
+
+    def test_geofence_bad_center_exit_2(self):
+        with tempfile.TemporaryDirectory() as d:
+            tmp = pathlib.Path(d)
+            f = self._write(tmp, "t0.csv", T0)
+            code, _ = self._run(["geofence", f, "--center", "notlat,notlon", "--radius", "100"])
+            self.assertEqual(code, 2)
+
+    def test_geofence_bad_polygon_exit_2(self):
+        with tempfile.TemporaryDirectory() as d:
+            tmp = pathlib.Path(d)
+            f = self._write(tmp, "t0.csv", T0)
+            # extra comma in vertex -> clear error, exit 2
+            code, _ = self._run(["geofence", f, "--polygon", "0,0,extra;1,1;2,2"])
+            self.assertEqual(code, 2)
+
+    def test_diff_negative_threshold_exit_2(self):
+        with tempfile.TemporaryDirectory() as d:
+            tmp = pathlib.Path(d)
+            a = self._write(tmp, "t0.csv", T0)
+            b = self._write(tmp, "t1.csv", T1)
+            code, _ = self._run(["diff", a, b, "--threshold", "-1"])
+            self.assertEqual(code, 2)
+
+    def test_mcp_server_importable(self):
+        # mcp_server must be importable without raising (the mcp package itself is optional).
+        import importlib
+        mod = importlib.import_module("geoaoi.mcp_server")
+        self.assertTrue(callable(getattr(mod, "serve", None)))
 
 
 if __name__ == "__main__":

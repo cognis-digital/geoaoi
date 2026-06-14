@@ -166,6 +166,10 @@ def diff_events(
     move_threshold_m: float = 50.0,
 ) -> list[dict]:
     """Diff two coordinate logs keyed by ident -> enter/exit/move/static events."""
+    if move_threshold_m < 0:
+        raise ValueError(
+            f"move_threshold_m must be >= 0, got {move_threshold_m}"
+        )
     b = {p.ident: p for p in before}
     a = {p.ident: p for p in after}
     events: list[dict] = []
@@ -237,13 +241,33 @@ def parse_points_csv(text: str) -> list[Point]:
 
 def parse_polygon(spec: str) -> list[tuple[float, float]]:
     """Parse 'lat,lon;lat,lon;...' into a list of (lat, lon) vertices."""
+    if not spec or not spec.strip():
+        raise ValueError("polygon spec is empty")
     verts: list[tuple[float, float]] = []
-    for pair in spec.split(";"):
+    for idx, pair in enumerate(spec.split(";")):
         pair = pair.strip()
         if not pair:
             continue
-        a, b = pair.split(",")
-        verts.append((float(a), float(b)))
+        parts = pair.split(",")
+        if len(parts) != 2:
+            raise ValueError(
+                f"polygon vertex {idx + 1}: expected 'lat,lon', got {pair!r}"
+            )
+        try:
+            lat_v, lon_v = float(parts[0]), float(parts[1])
+        except ValueError:
+            raise ValueError(
+                f"polygon vertex {idx + 1}: non-numeric coordinate in {pair!r}"
+            )
+        if not (-90.0 <= lat_v <= 90.0):
+            raise ValueError(
+                f"polygon vertex {idx + 1}: latitude {lat_v} out of range [-90, 90]"
+            )
+        if not (-180.0 <= lon_v <= 180.0):
+            raise ValueError(
+                f"polygon vertex {idx + 1}: longitude {lon_v} out of range [-180, 180]"
+            )
+        verts.append((lat_v, lon_v))
     if len(verts) < 3:
         raise ValueError("polygon needs at least 3 vertices")
     return verts

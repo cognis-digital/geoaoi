@@ -67,7 +67,27 @@ def _cmd_geofence(args) -> int:
     if args.polygon:
         fence = Geofence(name=args.name, polygon=parse_polygon(args.polygon))
     elif args.center is not None and args.radius is not None:
-        clat, clon = (float(x) for x in args.center.split(","))
+        center_parts = args.center.split(",")
+        if len(center_parts) != 2:
+            print(
+                f"error: --center must be 'lat,lon', got {args.center!r}",
+                file=sys.stderr,
+            )
+            return 2
+        try:
+            clat, clon = float(center_parts[0]), float(center_parts[1])
+        except ValueError:
+            print(
+                f"error: --center has non-numeric coordinate: {args.center!r}",
+                file=sys.stderr,
+            )
+            return 2
+        if args.radius <= 0:
+            print(
+                f"error: --radius must be a positive number, got {args.radius}",
+                file=sys.stderr,
+            )
+            return 2
         fence = Geofence(name=args.name, center=(clat, clon), radius_m=args.radius)
     else:
         print("error: provide --polygon OR (--center and --radius)", file=sys.stderr)
@@ -86,6 +106,12 @@ def _cmd_geofence(args) -> int:
 
 
 def _cmd_diff(args) -> int:
+    if args.threshold < 0:
+        print(
+            f"error: --threshold must be >= 0, got {args.threshold}",
+            file=sys.stderr,
+        )
+        return 2
     before = parse_points_csv(_read(args.before))
     after = parse_points_csv(_read(args.after))
     events = diff_events(before, after, move_threshold_m=args.threshold)
