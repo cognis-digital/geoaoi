@@ -1,0 +1,17 @@
+$ geoaoi-emit --help
+
+usage: geoaoi [-h] [--version] [--format {table,json}]
+              {bbox,geofence,diff} ...
+
+Area-of-interest GEOINT helper: bbox, geofence, change diffs.
+
+positional arguments:
+  {bbox,geofence,diff}
+    bbox                compute bounding box of a coordinate log
+    geofence            check point membership in a geofence
+    diff                diff two coordinate logs into change events
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}

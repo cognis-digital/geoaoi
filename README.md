@@ -21,6 +21,62 @@ geoaoi scan .            # → prioritized findings in seconds
 ```
 
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ geoaoi-emit --version
+geoaoi 0.1.0
+```
+
+```console
+$ geoaoi-emit --help
+usage: geoaoi [-h] [--version] [--format {table,json}]
+              {bbox,geofence,diff} ...
+
+Area-of-interest GEOINT helper: bbox, geofence, change diffs.
+
+positional arguments:
+  {bbox,geofence,diff}
+    bbox                compute bounding box of a coordinate log
+    geofence            check point membership in a geofence
+    diff                diff two coordinate logs into change events
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+```
+
+> Blocks above are real `geoaoi` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"feed_name": "My GeoAOI Feed",
+"actor": {
+"name": "John Doe"
+},
+"objects": [
+{
+"id": "1234567890",
+"type": "indicator",
+"count": 1,
+"data": {
+"indicator_types": ["IP"],
+"values": ["192.168.1.100"]
+}
+}
+]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. Install (Python 3.9+):
